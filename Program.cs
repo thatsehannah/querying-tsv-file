@@ -13,39 +13,28 @@ namespace QueryingTsvFile
               .Skip(1)
               .Select(line => Language.FromTsv(line))
               .ToList();
+            //Console.WriteLine(languages.Count);
 
             var prettifiedLanguages = languages.Select(l => l);
             //PrintList(prettifiedLanguages);
 
-            var csharpLanguages = from l in languages
-                                  where l.Name == "C#" || l.Predecessors.Contains("C#")
-                                  select l;
+            var csharpLanguages = languages.Where(l => l.Name == "C#" || l.Predecessors.Contains("C#"));
             //PrintList(csharpLanguages);
 
-            var microsoftLanguages = from l in languages
-                                     where l.ChiefDeveloper == "Microsoft"
-                                     select l;
+            var microsoftLanguages = languages.Where(l => l.ChiefDeveloper == "Microsoft");
             //PrintList(microsoftLanguages);
 
-            var lispDescendants = from l in languages
-                                  where l.Predecessors.Contains("Lisp")
-                                  select l;
+            var lispDescendants = languages.Where(l => l.Predecessors.Contains("Lisp"));
             //PrintList(lispDescendants);
 
-            var scriptLangauges = from l in languages
-                                  where l.Name.Contains("Script")
-                                  select l;
+            var scriptLangauges = languages.Where(l => l.Name.Contains("Script"));
             //PrintList(scriptLangauges);
-
-            int languagesCount = languages.Count;
-            Console.WriteLine(languagesCount);
 
             var nearMillenniumLangugages = from l in languages
                                   where l.Year >= 1995 && l.Year <= 2005
                                   select $"{l.Name} was invented in {l.Year}";
-            int nearMillenniumCount = nearMillenniumLangugages.Count();
-            Console.WriteLine(nearMillenniumCount);
-            PrintList(nearMillenniumLangugages);
+            //Console.WriteLine(nearMillenniumLangugages.Count());
+            //PrintList(nearMillenniumLangugages);
 
         }
 
